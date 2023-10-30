@@ -8,28 +8,16 @@ option go_package= "external/proto";
 
 // sinh proto
 // cd external/proto
-// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative invoicer.proto
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative hello.proto
 
 // lỗi - nếu lỗi protoc-gen-go-grpc: program not found or is not executable. 
 // tức là khi go install vào ```go env GOPATH``` đang không có trong PATH để có thể thực thi. 
 // fix bằng cách ```export PATH="$PATH:$(go env GOPATH)/bin"```
 
-message Amount {
-    string currency = 1;
-    int64 amount = 2;
+message HelloMessage {
+    string value = 1;
 }
-  
-message CreateRequest {
-    string from = 1;
-    string to = 2;
-    Amount total = 3;
-}
-  
-message CreateResponse {
-    bytes pdf = 1;
-}
-  
-service Invoicer {
-    // Create an invoice
-    rpc Create (CreateRequest) returns (CreateResponse) {}
+
+service HelloService {
+    rpc SayHello (HelloMessage) returns (HelloMessage);
 }
